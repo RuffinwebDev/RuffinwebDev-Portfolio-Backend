@@ -21,14 +21,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = [
-#   EC2 Public IPV4 DNS
-    "ec2-3-95-23-176.compute-1.amazonaws.com",
-#   Custom Domain Name
-    "ruffinweb.com"
-    "ruffinweb.com/api",
-#   Public IPv4 addres
-    "3.95.23.176",
+    "http://localhost:8000/",
+    "http://localhost:3000/",
     "localhost",
+    "127.0.0.1",
 ]
 
 
@@ -70,18 +66,22 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",  # for SSL, forwarded to 400
+    "http://localhost:8000",  # development backend server
+    "http://localhost:3000",  # development frontend server
     # these should be the final settings
-    "https://ruffinweb.com",
-    # cloudfront distribution custom domain name
-    "https://dddxuoyq4zc9n.cloudfront.net"
-
+    "https://ruffinweb.com",  # cloudfront distribution custom domain name.
+    # "https://backend-server-domain.com",
+    # "http://cloudfront-domain.s3.amazonaws.com",
 ]
 
 CSRF_TRUSTED_ORIGIN = [
+    "http://localhost:80",  # for SSL, forwarded to 400
+    "http://localhost:8000",  # development backend server
+    "http://localhost:3000",  # development frontend server
     # these should be the final settings
-    "https://ruffinweb.com",
-    # cloudfront distribution custom domain name
-    "https://dddxuoyq4zc9n.cloudfront.net"
+    "https://ruffinweb.com",  # cloudfront distribution custom domain name.
+    # "https://backend-server-domain.com",
+    # "http://cloudfront-domain.s3.amazonaws.com",
 ]
 
 
@@ -109,13 +109,14 @@ WSGI_APPLICATION = "RuffinwebProject.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Postgres has a pg_services.conf option to pass in the values of the database configuration which im not using here.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("PG_DATABASE_NAME"),
         "USER": os.getenv("PG_USER"),
         "PASSWORD": os.getenv("PG_PASSWORD"),
-        "HOST": os.getenv("PG_NAME"),
+        "HOST": os.getenv("EMAIL_USER"),
         "PORT": os.getenv("PG_PORT"),
         "CLIENT_ENCODING": "UTF8",
         "DEFAULT_TRANSACTION_ISOLATION": "read committed",
@@ -160,7 +161,6 @@ USE_TZ = True
 # The index and error pages are all stored with the frontend.
 # The only file in the stored with the backend is the email reply page.
 # STATIC_ROOT = "s3://bucket-name/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     # BASE_DIR / "static",
@@ -177,4 +177,3 @@ EMAIL_HOST_USER = os.getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 # Add logging
-

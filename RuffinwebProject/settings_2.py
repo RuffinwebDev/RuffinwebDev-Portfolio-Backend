@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
 #   EC2 Public IPV4 DNS
@@ -26,9 +26,6 @@ ALLOWED_HOSTS = [
 #   Custom Domain Name
     "ruffinweb.com"
     "ruffinweb.com/api",
-#   Public IPv4 addres
-    "3.95.23.176",
-    "localhost",
 ]
 
 
@@ -70,18 +67,22 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",  # for SSL, forwarded to 400
+    "http://localhost:8000",  # development backend server
+    "http://localhost:3000",  # development frontend server
     # these should be the final settings
-    "https://ruffinweb.com",
-    # cloudfront distribution custom domain name
-    "https://dddxuoyq4zc9n.cloudfront.net"
-
+    "https://ruffinweb.com",  # cloudfront distribution custom domain name.
+    # "https://backend-server-domain.com",
+    # "http://cloudfront-domain.s3.amazonaws.com",
 ]
 
 CSRF_TRUSTED_ORIGIN = [
+    "http://localhost:80",  # for SSL, forwarded to 400
+    "http://localhost:8000",  # development backend server
+    "http://localhost:3000",  # development frontend server
     # these should be the final settings
-    "https://ruffinweb.com",
-    # cloudfront distribution custom domain name
-    "https://dddxuoyq4zc9n.cloudfront.net"
+    "https://ruffinweb.com",  # cloudfront distribution custom domain name.
+    # "https://backend-server-domain.com",
+    # "http://cloudfront-domain.s3.amazonaws.com",
 ]
 
 
@@ -115,7 +116,7 @@ DATABASES = {
         "NAME": os.getenv("PG_DATABASE_NAME"),
         "USER": os.getenv("PG_USER"),
         "PASSWORD": os.getenv("PG_PASSWORD"),
-        "HOST": os.getenv("PG_NAME"),
+        "HOST": os.getenv("EMAIL_USER"),
         "PORT": os.getenv("PG_PORT"),
         "CLIENT_ENCODING": "UTF8",
         "DEFAULT_TRANSACTION_ISOLATION": "read committed",
@@ -160,7 +161,6 @@ USE_TZ = True
 # The index and error pages are all stored with the frontend.
 # The only file in the stored with the backend is the email reply page.
 # STATIC_ROOT = "s3://bucket-name/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     # BASE_DIR / "static",
@@ -178,3 +178,12 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 # Add logging
 
+env_file_s = os.getenv("EMAIL_USER")
+database_s = DATABASES
+cors_s = CORS_ALLOWED_ORIGINS
+
+
+def export_settings():
+  settings_object = [env_file_s, database_s, cors_s]
+  print(settings_object)
+# return settings_object
