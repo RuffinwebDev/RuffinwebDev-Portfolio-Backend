@@ -12,7 +12,7 @@ The message in the error console: 'sender with this email already exists.' """
 class SenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sender
-        fields = ("first_name", "last_name", "email")
+        fields = ("name", "email")
 
     def create(self, validated_data):
         email = validated_data.get("email")
@@ -29,6 +29,6 @@ class SenderSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ("message", "reply", "date", "message_sender")
+        fields = ("message", "reply", "date", "email")
 
 

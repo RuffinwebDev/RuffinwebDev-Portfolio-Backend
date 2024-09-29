@@ -30,7 +30,10 @@ ALLOWED_HOSTS = [
     "3.95.23.176",
 
     "localhost",
-    "127.0.0.1"
+    "127.0.0.1",
+
+    "127.0.0.1:3000",
+    "localhost:3000",
 ]
 
 
@@ -62,8 +65,8 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.BrowsableAPIRenderer",
-        # "rest_framework.renderers.JSONRenderer",
+        # "rest_framework.renderers.BrowsableAPIRenderer",
+        "rest_framework.renderers.JSONRenderer",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
@@ -75,7 +78,11 @@ CORS_ALLOWED_ORIGINS = [
     # these should be the final settings
     "https://ruffinweb.com",
     # cloudfront distribution custom domain name
-    "https://dddxuoyq4zc9n.cloudfront.net"
+    # "https://dddxuoyq4zc9n.cloudfront.net"
+
+
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
 
 ]
 

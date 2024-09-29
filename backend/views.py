@@ -30,24 +30,19 @@ class CreateMessageAPIView(generics.CreateAPIView):
             serializer.is_valid(raise_exception=True)
 
             # Extract sender data from the request and create a new sender object.
-            sender_first_name = request.data.get("first_name")
-            sender_last_name = request.data.get("last_name")
+            sender_name = request.data.get("name")
             sender_email = request.data.get("email")
             sender = Sender.objects.filter(email=sender_email).first()
 
             # If sender doesn't exist, create a new one
             if not sender:
                 sender = Sender.objects.create(
-                    first_name=sender_first_name,
-                    last_name=sender_last_name,
+                    name=sender_name,
                     email=sender_email,
                 )
 
-            # Associate the sender with the message.
-            serializer.validated_data["message_sender"] = sender
-
-            # Create a message record after assigning the matching Sender object to the message_sender field
-            self.perform_create(serializer)
+            # Save the message with the sender
+            serializer.save(message_sender=sender)
 
             headers = self.get_success_headers(serializer.data)
             return Response(
@@ -70,16 +65,14 @@ class SendReplyEmailAPIView(generics.CreateAPIView):
             serializer.is_valid(raise_exception=True)
 
             # Extract sender data from the request
-            sender_first_name = serializer.validated_data.get("first_name")
-            sender_last_name = serializer.validated_data.get("last_name")
+            sender_name = serializer.validated_data.get("name")
             sender_email = serializer.validated_data.get("email")
             general_subject = "Thanks for visiting Ruffinweb!"
             email_template = "reply_email.html"
 
             # Context data for the email template
             email_context = {
-                "sender_first_name": sender_first_name,
-                "sender_last_name": sender_last_name,
+                "sender_name": sender_name,
                 "sender_email": sender_email,
                 "subject": general_subject,
             }

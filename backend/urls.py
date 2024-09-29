@@ -15,7 +15,7 @@ router.register(r"message", MessageViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("sender", SenderView.as_view(), name="create_contact"),
-    path("message", CreateMessageAPIView.as_view(), name="create_message"),
-    path("send-email", SendReplyEmailAPIView.as_view(), name="send_email"),
+    path("sender/", SenderView.as_view(), name="create-contact"),
+    path("message/", CreateMessageAPIView.as_view(), name="create-message"),
+    path("send-email/", SendReplyEmailAPIView.as_view(), name="send-email"),
 ]

@@ -66,6 +66,13 @@ done
 echo "Making and applying migrations..."
 python3 manage.py makemigrations
 python3 manage.py migrate
+python3 manage.py makemigrations backend
+python3 manage.py migrate backend
+
+
+for app in $apps; do
+    python3 manage.py migrate $app
+done
 
 echo "Django project setup complete."
 
