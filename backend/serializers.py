@@ -1,3 +1,4 @@
+from django.db.migrations import serializer
 from rest_framework import serializers
 from .models import Sender, Message
 
@@ -18,12 +19,16 @@ class SenderSerializer(serializers.ModelSerializer):
         sender = Sender.objects.filter(email=email).first()
         if sender:
             # If sender exists, return the existing instance
+            print(SenderSerializer.errors)
             return sender
 
         return super().create(validated_data)
+
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ("message", "reply", "date", "message_sender")
+
+

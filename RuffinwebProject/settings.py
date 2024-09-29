@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
 #   EC2 Public IPV4 DNS
@@ -28,7 +28,9 @@ ALLOWED_HOSTS = [
     "ruffinweb.com/api",
 #   Public IPv4 addres
     "3.95.23.176",
+
     "localhost",
+    "127.0.0.1"
 ]
 
 
@@ -60,8 +62,8 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
-        # "rest_framework.renderers.BrowsableAPIRenderer",
-        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+        # "rest_framework.renderers.JSONRenderer",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
@@ -109,19 +111,29 @@ WSGI_APPLICATION = "RuffinwebProject.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#  PostgreSQL
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("PG_DATABASE_NAME"),
+#         "USER": os.getenv("PG_USER"),
+#         "PASSWORD": os.getenv("PG_PASSWORD"),
+#         "HOST": os.getenv("PG_NAME"),
+#         "PORT": os.getenv("PG_PORT"),
+#         "CLIENT_ENCODING": "UTF8",
+#         "DEFAULT_TRANSACTION_ISOLATION": "read committed",
+#         "TIMEZONE": "UTC"
+#     }
+# }
+
+# SQLite
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("PG_DATABASE_NAME"),
-        "USER": os.getenv("PG_USER"),
-        "PASSWORD": os.getenv("PG_PASSWORD"),
-        "HOST": os.getenv("PG_NAME"),
-        "PORT": os.getenv("PG_PORT"),
-        "CLIENT_ENCODING": "UTF8",
-        "DEFAULT_TRANSACTION_ISOLATION": "read committed",
-        "TIMEZONE": "UTC"
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -177,4 +189,3 @@ EMAIL_HOST_USER = os.getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 # Add logging
-
