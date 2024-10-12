@@ -18,17 +18,13 @@ class SenderSerializer(serializers.ModelSerializer):
         email = validated_data.get("email")
         sender = Sender.objects.filter(email=email).first()
         if sender:
-            # If sender exists, return the existing instance
-            print(SenderSerializer.errors)
             return sender
 
         return super().create(validated_data)
 
 
-
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ("message", "reply", "date", "email")
-
+        fields = ("message", "message_sender", "date")
 

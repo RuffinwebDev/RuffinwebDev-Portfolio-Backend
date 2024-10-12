@@ -81,3 +81,6 @@ echo "Django project setup complete."
 # sleep 10
 # docker-compose exec web python manage.py import_videos /app/output
 # docker-compose logs -f
+
+
+# Email sending functionality is now handled the backend alone.
