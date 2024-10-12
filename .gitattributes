@@ -1,2 +1,2 @@
-*.es documentation-language=js
-*.es linguist-language=css
+*.es linguist-vendored-language=js
+*.es linguist-vendored-language=css
