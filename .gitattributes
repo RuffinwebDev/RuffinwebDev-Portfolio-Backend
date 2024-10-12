@@ -1,4 +1,2 @@
-*.es linguist-vendored-language=js
-*.es linguist-vendored-language=css
-static/** linuguist-vendored=false
-static/** linuguist-documenation=false
+*.css linguist-vendored
+*.js linguist-vendored
