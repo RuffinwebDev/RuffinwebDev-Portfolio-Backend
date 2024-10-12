@@ -1,2 +1,3 @@
 *.es linguist-vendored-language=js
 *.es linguist-vendored-language=css
+static/** linuguist-vendored
